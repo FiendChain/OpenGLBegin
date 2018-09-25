@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
 
 int main(int argc, char *argv[]) {
     GLFWwindow* window;
@@ -18,7 +20,12 @@ int main(int argc, char *argv[]) {
     }
     // make window current context
     glfwMakeContextCurrent(window);
-
+    // glew init
+    GLenum err = glewInit();
+    if (GLEW_OK != err) {
+        fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+    }
+    fprintf(stdout, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
     // main render loop
     while (!glfwWindowShouldClose(window)) {
         // clear window

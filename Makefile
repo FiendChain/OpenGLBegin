@@ -3,13 +3,13 @@ OBJ := objects
 SRC := sources
 
 ifeq ($(OS),Windows_NT)
-	CFLAGS	:= -DDGLEW_NO_GLU -DGLEW_STATIC -static -std=c++17 
+	CFLAGS	:= -DDGLEW_NO_GLU -static -std=c++17 
 	LLIB   	:= -I .\libraries\include -L .\libraries\lib
-	LFLAGS  := -lglfw3 -lopengl32 -luser32 -lgdi32 -lshell32 -lglu32 -lglew32s
+	LFLAGS  := -lglfw3 -lopengl32 -luser32 -lgdi32 -lshell32 -lglu32 -lglew32
 else
 	CFLAGS 	:= -std=c++17 -fsanitize=address 
 	LLIB   	:= 
-	LFLAGS 	:= -lglfw3 -lopengl32 -luser32 -lgdi32 -lshell32 -lglu32 -lglew32s
+	LFLAGS 	:= -lglfw3 -lopengl32 -luser32 -lgdi32 -lshell32 -lglu32 -lglew32
 endif
 
 TARGET 	:= main
