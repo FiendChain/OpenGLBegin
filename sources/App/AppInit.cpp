@@ -1,9 +1,8 @@
 #include "App.hpp"
+#include "debug.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-
 #include <iostream>
-#include <exception>
 
 using namespace app;
 
@@ -20,6 +19,7 @@ void App::initOpenGL() {
     }
     // make window current context
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(1); // vsync
     // glew init
     GLenum err = glewInit();
     if (GLEW_OK != err) 
@@ -28,6 +28,10 @@ void App::initOpenGL() {
         snprintf(buffer, 100, "%s", glewGetErrorString(err));
         throw (const char *)buffer;
     }
+    // set debugger
+    glEnable(GL_DEBUG_OUTPUT);
+    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+    glDebugMessageCallback(HandleDebug, nullptr);
         
     // get opengl version
     std::cout << "OpenGL version: " <<
