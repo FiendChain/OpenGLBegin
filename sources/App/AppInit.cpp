@@ -2,20 +2,28 @@
 #include "debug.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <exception>
+#include <stdlib.h>
 #include <iostream>
 
 using namespace app;
 
 void App::initOpenGL() {
     if (!glfwInit()) {
-        throw "Failed to init glfw library";
+        std::cerr << "Failed to init glfw library" << std::endl;
+        exit(EXIT_FAILURE);
     }
+    // set opengl profile
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     // create window with opengl context
     window = glfwCreateWindow(640, 480, "OpenGL app", NULL, NULL);
     if (!window) 
     {
         glfwTerminate();
-        throw "Failed to create opengl window";
+        std::cerr << "Failed to create opengl window" << std::endl;
+        exit(EXIT_FAILURE);
     }
     // make window current context
     glfwMakeContextCurrent(window);
@@ -24,9 +32,8 @@ void App::initOpenGL() {
     GLenum err = glewInit();
     if (GLEW_OK != err) 
     {
-        char buffer[100] = {0};
-        snprintf(buffer, 100, "%s", glewGetErrorString(err));
-        throw (const char *)buffer;
+        std::cerr << "Error: " << glewGetErrorString(err) << std::endl;
+        exit(EXIT_FAILURE);
     }
     // set debugger
     glEnable(GL_DEBUG_OUTPUT);

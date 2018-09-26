@@ -26,6 +26,10 @@ void App::render() {
         0, 1, 2, // bottom triangle
         2, 3, 0, // top triangle
     };
+    // create vertex array object
+    unsigned int vao;
+    GLCall(glGenVertexArrays(1, &vao));
+    GLCall(glBindVertexArray(vao));
     // creating and assigning data
     unsigned int buffer;
     GLCall(glGenBuffers(1, &buffer));
@@ -46,17 +50,29 @@ void App::render() {
     GLCall(glUseProgram(shader));
     // create a uniform
     GLCall(int location = glGetUniformLocation(shader, "u_Color"));
-    ASSERT((location != -1));
-    GLCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
+    ASSERT(location != -1);
     // dynamic uniform
     RainbowColour rainbow;
+    // unbind all the buffers
+    GLCall(glUseProgram(0));
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
     // main render loop
     while (!glfwWindowShouldClose(window)) 
     {
         // clear window
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
-
+        // set program and uniform for the shader
+        GLCall(glUseProgram(shader));
         GLCall(glUniform4f(location, rainbow.r, rainbow.g, rainbow.b, rainbow.a));
+        // bind vertex buffer
+        GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
+        // set vertex layout again
+        GLCall(glEnableVertexAttribArray(0)); 
+        GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(struct Position), (const void*)offsetof(VertexData, position)));
+        // index buffer
+        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+        // render
         GLCall(glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(unsigned int), GL_UNSIGNED_INT, nullptr));
         rainbow.update(); 
         // swap front and back buffers
