@@ -2,8 +2,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
 #include <exception>
 
 using namespace app;
@@ -31,5 +30,6 @@ void App::initOpenGL() {
     }
         
     // get opengl version
-    fprintf(stdout, "OpenGL version: %s\n", glGetString(GL_VERSION));
+    std::cout << "OpenGL version: " <<
+        glGetString(GL_VERSION) << std::endl;
 }
