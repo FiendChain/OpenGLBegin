@@ -1,12 +1,11 @@
-#include "App.hpp"
-
+#include "Shaders.hpp"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
-using namespace app;
-
-unsigned int App::createProgram(const std::string& vertexShader, const std::string& fragmentShader)
+unsigned int createProgram(const std::string& vertexShader, const std::string& fragmentShader)
 {
     unsigned int programId = glCreateProgram();
     unsigned int vertexShaderId = compileShader(GL_VERTEX_SHADER, vertexShader);
@@ -24,7 +23,7 @@ unsigned int App::createProgram(const std::string& vertexShader, const std::stri
     return programId;
 }
 
-unsigned int App::compileShader(unsigned int type, const std::string& source) {
+unsigned int compileShader(unsigned int type, const std::string& source) {
     unsigned int id = glCreateShader(type);
     const char *src = source.c_str();
     // https://youtu.be/71BLZwRGUJE?t=8m35s
@@ -53,7 +52,7 @@ unsigned int App::compileShader(unsigned int type, const std::string& source) {
 }
 
 // parse the shader file
-struct ShaderFile App::parseShaderFile(const std::string& filepath) {
+struct ShaderFile parseShaderFile(const std::string& filepath) {
     // keep track of shader type
     enum class ShaderType {
         NONE = -1,

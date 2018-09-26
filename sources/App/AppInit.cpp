@@ -1,8 +1,7 @@
 #include "App.hpp"
-#include "debug.hpp"
+#include "Debug.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <exception>
 #include <stdlib.h>
 #include <iostream>
 
