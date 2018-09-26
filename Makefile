@@ -19,6 +19,9 @@ TARGET 	:= main
 SOURCES := $(wildcard $(SRC)/*/*.cpp $(SRC)/*.cpp)
 # SOURCES := $(powershell.exe dir -Path $(SRC)/ -Filter *.cpp -Recurse | ForEach-Object FullName | Resolve-Path -Relative)
 OBJECTS := $(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(SOURCES))
+OBJDIRS := $(dir $(OBJECTS))
+
+DUMMY := $(shell mkdir --parents $(OBJDIRS))
 
 $(TARGET): sources
 	$(CC) $(OBJECTS) -o $(TARGET) $(CFLAGS) $(LLIB) $(LDFLAGS) $(WFLAGS)
