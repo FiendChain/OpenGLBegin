@@ -2,8 +2,10 @@
 #include "../RainbowColour/RainbowColour.hpp"
 #include "Errors.hpp"
 #include "Shaders.hpp" 
-#include "VertexBuffer.hpp"
 #include "IndexBuffer.hpp"
+#include "VertexArray.hpp"
+#include "VertexBuffer.hpp"
+#include "VertexBufferLayout.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -31,15 +33,13 @@ void App::render() {
         2, 3, 0, // top triangle
     };
     // create vertex array object
-    unsigned int vao;
-    GLCall(glGenVertexArrays(1, &vao));
-    GLCall(glBindVertexArray(vao));
+    VertexArray vertexArray;
     // creating and assigning data
     VertexBuffer vertexBuffer(vertex_data, sizeof(vertex_data));
     // vertex layout/attributes
-    GLCall(glEnableVertexAttribArray(0));
-    GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(struct Position), (const void*)offsetof(VertexData, position)));
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0)); 
+    VertexBufferLayout layout;
+    layout.Push<float>(2);
+    vertexArray.AddBuffer(vertexBuffer, layout);
     // create index buffer object
     IndexBuffer indexBuffer(indices, 6);
     // load shaders
@@ -64,10 +64,7 @@ void App::render() {
         GLCall(glUseProgram(shader));
         GLCall(glUniform4f(location, rainbow.r, rainbow.g, rainbow.b, rainbow.a));
         // bind vertex buffer
-        vertexBuffer.Bind();
-        // set vertex layout again
-        GLCall(glEnableVertexAttribArray(0)); 
-        GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(struct Position), (const void*)offsetof(VertexData, position)));
+        vertexArray.Bind();
         // index buffer
         indexBuffer.Bind();
         // render
