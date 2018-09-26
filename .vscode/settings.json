@@ -32,7 +32,9 @@
         "cinttypes": "cpp",
         "type_traits": "cpp",
         "tuple": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "cstdarg": "cpp",
+        "iostream": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Disabled"
 }
