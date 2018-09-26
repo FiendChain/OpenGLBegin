@@ -3,28 +3,30 @@ OBJ := objects
 SRC := sources
 
 ifeq ($(OS),Windows_NT)
-	CFLAGS	:= -DDGLEW_NO_GLU -static -std=c++17 
+	CFLAGS	:= -DDGLEW_NO_GLU -DGLEW_BUILD -static -std=c++17 
 	LLIB   	:= -I .\libraries\include -L .\libraries\lib
-	LFLAGS  := -lglfw3 -lopengl32 -luser32 -lgdi32 -lshell32 -lglu32 -lglew32
+	LDFLAGS := -lglfw3 -lopengl32 -luser32 -lgdi32 -lshell32 -lglu32 -lglew32
+	WFLAGS	:= -Wall
 else
 	CFLAGS 	:= -std=c++17 -fsanitize=address 
 	LLIB   	:= 
-	LFLAGS 	:= -lglfw3 -lopengl32 -luser32 -lgdi32 -lshell32 -lglu32 -lglew32
+	LDFLAGS := -lglfw3 -lopengl32 -luser32 -lgdi32 -lshell32 -lglu32 -lglew32
+	WFLAGS	:= -Wall
 endif
 
 TARGET 	:= main
 # main code
 SOURCES := $(wildcard $(SRC)/*/*.cpp $(SRC)/*.cpp)
-# SOURCES := $(shell find $(SRC)/ -type f -name '*.cpp')
+# SOURCES := $(powershell.exe dir -Path $(SRC)/ -Filter *.cpp -Recurse | ForEach-Object FullName | Resolve-Path -Relative)
 OBJECTS := $(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(SOURCES))
 
 $(TARGET): sources
-	$(CC) $(OBJECTS) -o $(TARGET) $(CFLAGS) $(LLIB) $(LFLAGS)
+	$(CC) $(OBJECTS) -o $(TARGET) $(CFLAGS) $(LLIB) $(LDFLAGS) $(WFLAGS)
 
 # make source
 sources: $(OBJECTS)
 $(OBJ)/%.o: $(SRC)/%.cpp
-	$(CC) -c $< -o $@ $(LLIB) $(CFLAGS) $(LFLAGS)
+	$(CC) -c $< -o $@ $(LLIB) $(CFLAGS) $(LDFLAGS)
 
 clean:
 	rm -f $(TARGET) $(OBJ)/*.o $(OBJ)/*/*.o core
