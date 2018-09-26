@@ -50,7 +50,7 @@ void App::render() {
         // clear window
         glClear(GL_COLOR_BUFFER_BIT);
         // render using index buffer
-        GLCall(glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(unsigned int), GL_INT, nullptr));
+        GLCall(glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(unsigned int), GL_UNSIGNED_INT, nullptr));
         // swap double buffer (front and back)
         glfwSwapBuffers(window); 
         // poll events
