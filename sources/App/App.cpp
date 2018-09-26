@@ -19,10 +19,14 @@ void App::run() {
 }
 
 void App::render() {
-    struct VertexData vertex_data[3] = {
+    struct VertexData vertex_data[] = {
         {-0.5f, -0.5f},
-        { 0.0f,  0.5f},
         { 0.5f, -0.5f},
+        { 0.5f,  0.5f},
+        // render top half of square
+        { 0.5f,  0.5f},
+        {-0.5f,  0.5f},
+        {-0.5f, -0.5f},
     };
     // creating and assigning data
     unsigned int buffer_id;
@@ -49,7 +53,7 @@ void App::render() {
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(struct Position), (const void*)offsetof(VertexData, position));
     glBindBuffer(GL_ARRAY_BUFFER, 0); 
 
-    struct ShaderFile shaderFile = parseShaderFile("resources/shaders/basicShader.shader");
+    struct ShaderFile shaderFile = parseShaderFile("resources/shaders/basicShader.glsl");
     unsigned int programId = createProgram(shaderFile.vertex, shaderFile.fragment);
     glUseProgram(programId);
 
