@@ -1,4 +1,5 @@
 #include "App.hpp"
+#include "macros.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -49,9 +50,7 @@ void App::render() {
         // clear window
         glClear(GL_COLOR_BUFFER_BIT);
         // render using index buffer
-        GLClearErrors();
-        glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(unsigned int), GL_INT, nullptr);
-        GLCheckErrors();
+        GLCall(glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(unsigned int), GL_INT, nullptr));
         // swap double buffer (front and back)
         glfwSwapBuffers(window); 
         // poll events

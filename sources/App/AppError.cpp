@@ -11,10 +11,13 @@ void App::GLClearErrors() {
 
     }
 }
-
-void App::GLCheckErrors() {
+ 
+bool App::GLCheckErrors(const char *funcName, const char *file, int line) {
     while (GLenum error = glGetError())
     {
-        std::cerr << "[OpenGL Error] (" << error << ")" << std::endl;
+        std::cerr << "[OpenGL Error] (" << error << "): "
+            << funcName << "@" << file << ":" << line << std::endl;
+        return false;
     }
+    return true; 
 }

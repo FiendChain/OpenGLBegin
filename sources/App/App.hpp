@@ -30,7 +30,7 @@ class App {
         void render();
         // error handling
         void GLClearErrors();
-        void GLCheckErrors();
+        bool GLCheckErrors(const char *, const char *, int);
         // compile shaders and create program
         unsigned int createProgram(const std::string&, const std::string&);
         struct ShaderFile parseShaderFile(const std::string&);
