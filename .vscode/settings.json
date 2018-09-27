@@ -34,7 +34,8 @@
         "tuple": "cpp",
         "typeinfo": "cpp",
         "cstdarg": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "string": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Disabled"
 }
