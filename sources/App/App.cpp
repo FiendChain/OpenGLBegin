@@ -1,6 +1,6 @@
 #include "App.hpp"
 #include "../RainbowColour/RainbowColour.hpp"
-#include "Errors.hpp"
+#include "OpenGL.hpp"
 #include "Shader.hpp" 
 #include "Uniform.hpp"
 #include "IndexBuffer.hpp"
@@ -8,8 +8,7 @@
 #include "VertexBuffer.hpp"
 #include "VertexBufferLayout.hpp"
 #include "Renderer.hpp"
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "Texture.hpp"
 
 using namespace app;
 
@@ -24,10 +23,10 @@ void App::run() {
 
 void App::render() {
     struct VertexData vertex_data[] = {
-        {-0.5f, -0.5f},
-        { 0.5f, -0.5f},
-        { 0.5f,  0.5f},
-        {-0.5f,  0.5f}, // use an index buffer to reuse prev vertexes
+        {-0.5f, -0.5f, 0.0f, 0.0f},
+        { 0.5f, -0.5f, 1.0f, 0.0f},
+        { 0.5f,  0.5f, 1.0f, 1.0f},
+        {-0.5f,  0.5f, 0.0f, 1.0f}, // use an index buffer to reuse prev vertexes
     };
     // induces
     unsigned int indices[] = {
@@ -39,13 +38,20 @@ void App::render() {
     
     VertexBufferLayout layout;
     layout.Push<float>(2);
+    layout.Push<float>(2);
     vertexArray.AddBuffer(vertexBuffer, layout);
 
     IndexBuffer indexBuffer(indices, 6);
 
     Shader shader("resources/shaders/basicShader.glsl");
-    UniformRainbow uniform; 
+    UniformRainbow rainbowUniform; 
+    Uniform4<float> uniform(0.5f, 0.5f, 0.5f, 1.0f);
     shader.AddUniform("u_Color", &uniform);
+
+    Texture texture("resources/textures/doge.png");
+    texture.Bind(0);
+    Uniform1<int> textureUniform(0);
+    shader.AddUniform("u_Texture", &textureUniform);
 
     shader.Unbind();
     vertexBuffer.Unbind();
@@ -56,6 +62,7 @@ void App::render() {
     {
         renderer.Clear();
         renderer.Draw(vertexArray, indexBuffer, shader);
+        rainbowUniform.Update();
         GLCall(glfwSwapBuffers(window)); 
         GLCall(glfwPollEvents());
     }

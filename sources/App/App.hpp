@@ -11,8 +11,14 @@ struct Position {
     float y;
 };
 
+struct TextCoords {
+    float x;
+    float y;
+};
+
 struct VertexData {
     struct Position position;
+    struct TextCoords textCoords;
 };
 
 class App {
