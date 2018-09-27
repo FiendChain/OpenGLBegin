@@ -2,6 +2,7 @@
 #include "VertexArray.hpp"
 #include "IndexBuffer.hpp"
 #include "Shader.hpp"
+#include "OpenGL.hpp"
 
 class Renderer
 {
