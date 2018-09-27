@@ -37,7 +37,6 @@ Shader::~Shader()
 void Shader::AddUniform(const std::string& name, const Uniform *uniform)
 {
     int location = GetUniformLocation(name);
-    ASSERT(location != -1);
     m_Uniforms.push_back(uniform);
     m_Locations.push_back(location);
 }
@@ -45,7 +44,6 @@ void Shader::AddUniform(const std::string& name, const Uniform *uniform)
 void Shader::SetUniform(const std::string& name, const Uniform *uniform)
 {
     int location = GetUniformLocation(name);
-    ASSERT(location != -1);
     uniform->Apply(location);
 }
 
