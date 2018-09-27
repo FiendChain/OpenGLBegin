@@ -1,7 +1,7 @@
 #include "App.hpp"
 #include "../RainbowColour/RainbowColour.hpp"
 #include "OpenGL.hpp"
-#include "Shader.hpp" 
+#include "Shader.hpp"  
 #include "Uniform.hpp"
 #include "IndexBuffer.hpp"
 #include "VertexArray.hpp"
@@ -9,6 +9,9 @@
 #include "VertexBufferLayout.hpp"
 #include "Renderer.hpp"
 #include "Texture.hpp"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 App::App() {
     initOpenGL();
@@ -31,6 +34,9 @@ void App::render() {
         0, 1, 2, // bottom triangle
         2, 3, 0, // top triangle
     };
+    // projection matrix uniform
+    UniformMat4f projUniform(glm::ortho(-1.0f, 1.0f, -0.75f, 0.75f, -1.0f, 1.0f));
+    // create buffers
     VertexArray vertexArray;
     VertexBuffer vertexBuffer(vertex_data, sizeof(vertex_data));
     
@@ -43,8 +49,8 @@ void App::render() {
 
     Shader shader("resources/shaders/basicShader.glsl");
     UniformRainbow rainbowUniform; 
-    Uniform4<float> uniform(0.5f, 0.5f, 0.5f, 1.0f);
-    shader.AddUniform("u_Color", &uniform);
+    shader.AddUniform("u_Color", &rainbowUniform);
+    shader.SetUniform("u_MVP", &projUniform);
 
     Texture texture("resources/textures/doge.png");
     texture.Bind(0);

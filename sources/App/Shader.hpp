@@ -2,7 +2,7 @@
 #include "Uniform.hpp"
 #include <string>
 #include <unordered_map>
-
+ 
 class Shader
 {
     private:

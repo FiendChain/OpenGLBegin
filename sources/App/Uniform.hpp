@@ -2,6 +2,8 @@
 #include <vector>
 #include "OpenGL.hpp"
 #include "../RainbowColour/RainbowColour.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 class Uniform
 {
@@ -12,12 +14,21 @@ class Uniform
 
 class UniformRainbow: public Uniform
 {
+    private:
+        RainbowColour rainbow;
     public:
         UniformRainbow();
         void Apply(int location) const;
         void Update();
+};
+
+class UniformMat4f: public Uniform
+{
     private:
-        RainbowColour rainbow;
+        glm::mat4 m_Matrix;
+    public:
+        UniformMat4f(glm::mat4 matrix);
+        void Apply(int location) const;
 };
 
 template <typename T>

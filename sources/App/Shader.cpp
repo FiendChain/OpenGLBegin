@@ -43,6 +43,7 @@ void Shader::AddUniform(const std::string& name, const Uniform *uniform)
 
 void Shader::SetUniform(const std::string& name, const Uniform *uniform)
 {
+    Bind();
     int location = GetUniformLocation(name);
     uniform->Apply(location);
 }
