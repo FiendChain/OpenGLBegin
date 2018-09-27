@@ -10,8 +10,6 @@
 #include "Renderer.hpp"
 #include "Texture.hpp"
 
-using namespace app;
-
 App::App() {
     initOpenGL();
 }

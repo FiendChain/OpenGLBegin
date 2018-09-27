@@ -3,7 +3,7 @@
 
 int main(int argc, char *argv[]) 
 {
-    app::App main_app = app::App();
+    App main_app;
     main_app.run();
 
     return EXIT_SUCCESS;

@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <iostream>
 
-using namespace app;
-
 void App::initOpenGL() {
     if (!glfwInit()) {
         std::cerr << "Failed to init glfw library" << std::endl;
