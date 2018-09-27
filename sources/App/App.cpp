@@ -1,7 +1,8 @@
 #include "App.hpp"
 #include "../RainbowColour/RainbowColour.hpp"
 #include "Errors.hpp"
-#include "Shaders.hpp" 
+#include "Shader.hpp" 
+#include "Uniform.hpp"
 #include "IndexBuffer.hpp"
 #include "VertexArray.hpp"
 #include "VertexBuffer.hpp"
@@ -43,16 +44,15 @@ void App::render() {
     // create index buffer object
     IndexBuffer indexBuffer(indices, 6);
     // load shaders
-    struct ShaderFile shaderFile = parseShaderFile("resources/shaders/basicShader.glsl");
-    unsigned int shader = createProgram(shaderFile.vertex, shaderFile.fragment);
-    GLCall(glUseProgram(shader));
+    Shader shader("resources/shaders/basicShader.glsl");
     // create a uniform
-    GLCall(int location = glGetUniformLocation(shader, "u_Color"));
-    ASSERT(location != -1);
-    // dynamic uniform
     RainbowColour rainbow;
+    UniformRainbow uniform(rainbow);
+    shader.AddUniform("u_Color", &uniform);
+    // dynamic uniform
+    
     // unbind all the buffers
-    GLCall(glUseProgram(0));
+    shader.Unbind();
     vertexBuffer.Unbind();
     indexBuffer.Unbind();
     // main render loop
@@ -61,8 +61,7 @@ void App::render() {
         // clear window
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
         // set program and uniform for the shader
-        GLCall(glUseProgram(shader));
-        GLCall(glUniform4f(location, rainbow.r, rainbow.g, rainbow.b, rainbow.a));
+        shader.Bind();
         // bind vertex buffer
         vertexArray.Bind();
         // index buffer
@@ -75,6 +74,5 @@ void App::render() {
         // poll events
         GLCall(glfwPollEvents());
     }
-    GLCall(glDeleteProgram(shader));
 }
 
