@@ -14,9 +14,11 @@ else
 	WFLAGS	:= -Wall
 endif
 
+rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
+
 TARGET 	:= main
 # main code
-SOURCES := $(wildcard $(SRC)/*/*.cpp $(SRC)/*.cpp)
+SOURCES := $(call rwildcard, $(SRC)/, *.cpp)
 # SOURCES := $(powershell.exe dir -Path $(SRC)/ -Filter *.cpp -Recurse | ForEach-Object FullName | Resolve-Path -Relative)
 OBJECTS := $(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(SOURCES))
 OBJDIRS := $(dir $(OBJECTS))
