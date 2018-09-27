@@ -5,16 +5,16 @@
 class Uniform
 {
     public:
-        virtual void Apply(int location) const = 0;
+        virtual void Apply(int location) = 0;
 };
 
 
 class UniformRainbow: public Uniform
 {
     public:
-        UniformRainbow(const RainbowColour& rainbow_);
-        void Apply(int location) const;
+        UniformRainbow();
+        void Apply(int location);
     private:
-        const RainbowColour& rainbow;
+        RainbowColour rainbow;
 };
 

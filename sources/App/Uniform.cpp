@@ -3,13 +3,14 @@
 #include "../RainbowColour/RainbowColour.hpp"
 #include <GL/glew.h>
 
-UniformRainbow::UniformRainbow(const RainbowColour& rainbow_)
-    : rainbow(rainbow_)
+UniformRainbow::UniformRainbow()
+    : rainbow()
 {
 
 }
 
-void UniformRainbow::Apply(int location) const
+void UniformRainbow::Apply(int location)
 {
     GLCall(glUniform4f(location, rainbow.r, rainbow.g, rainbow.b, rainbow.a));
+    rainbow.update();
 }
