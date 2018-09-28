@@ -32,4 +32,5 @@ class App {
         void Render();
         bool InitGLFW();
         bool InitGlew();
+        bool InitImGui();
 };

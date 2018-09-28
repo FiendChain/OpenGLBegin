@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <iostream>
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw_gl3.h>
 
 bool App::InitGLFW() {
     if (glfwInit() == GL_FALSE) {
@@ -35,6 +37,14 @@ bool App::InitGlew()
         std::cerr << "Glew init error: " << glewGetErrorString(err) << std::endl;
         return false;
     }
+    return true;
+}
+
+bool App::InitImGui()
+{
+    ImGui::CreateContext();
+    ImGui_ImplGlfwGL3_Init(window, true);
+    ImGui::StyleColorsDark();
     return true;
 }
 

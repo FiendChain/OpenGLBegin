@@ -13,8 +13,6 @@
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-// imguie
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw_gl3.h>
 
@@ -23,6 +21,7 @@ App::App(unsigned int width, unsigned int height)
 {
     ASSERT(InitGLFW());
     ASSERT(InitGlew());
+    ASSERT(InitImGui());
     std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
 }
 
@@ -35,25 +34,24 @@ void App::Run() {
 
 void App::Render() {
     struct VertexData vertex_data[] = {
-        // position of vertex, texture coordinate
-        // texture coordinate is normalised coordinate on texture where the vertex is
-        {{200, 200}, {0.0f, 0.0f}}, // 0 (bottom left)
-        {{400, 200}, {1.0f, 0.0f}}, // 1 (bottom right)
-        {{400, 400}, {1.0f, 1.0f}}, // 2 (top right)
-        {{200, 400}, {0.0f, 1.0f}}, // 3 (top left)
+        // centre the object around (0,0,0)
+        {{-50.0f, -50.0f}, {0.0f, 0.0f}}, // 0 (bottom left)
+        {{ 50.0f, -50.0f}, {1.0f, 0.0f}}, // 1 (bottom right)
+        {{ 50.0f,  50.0f}, {1.0f, 1.0f}}, // 2 (top right)
+        {{-50.0f,  50.0f}, {0.0f, 1.0f}}, // 3 (top left)
     };
     // induces
     unsigned int indices[] = {
         0, 1, 2, 
         2, 3, 0, 
     };
-    // projection matrix
+    // projection matrix - projection of model to screen
     glm::mat4 proj = glm::ortho(0.0f, (float)m_Width, 0.0f, (float)m_Height, -1.0f, 1.0f);
-    // view matrix
-    glm::vec3 translation(0, 0, 0);
-    glm::mat4 view = glm::translate(glm::mat4(1.0f), translation);
-    // model
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
+    // view matrix - position of camera
+    glm::vec3 viewTranslation(0, 0, 0);
+    glm::mat4 view = glm::translate(glm::mat4(1.0f), viewTranslation);
+    // model - position of model
+    glm::mat4 model = glm::mat4(1.0f);
     // Model * View * Projection matrix
     // reverse order b/c column major
     // standard matrix mult MVP is for row major matrixes
@@ -85,29 +83,36 @@ void App::Render() {
     indexBuffer.Unbind();
 
     Renderer renderer;
-
-    ImGui::CreateContext();
-    ImGui_ImplGlfwGL3_Init(window, true);
-    ImGui::StyleColorsDark();
+    glm::vec3 dogeTranslations[2] = {
+        glm::vec3(0, 0, 0), 
+        glm::vec3(0, 0, 0),
+    };
 
     while (!glfwWindowShouldClose(window)) 
     {
         // renderer
         renderer.Clear();
-        // render
-        renderer.Draw(vertexArray, indexBuffer, shader);
         u_Rainbow.Update();
-        view = glm::translate(glm::mat4(1.0f), translation);
-        mvp = proj * view * model;
-        u_MVP.Update(mvp);
+        view = glm::translate(glm::mat4(1.0f), viewTranslation); 
+        // doges
+        for (const auto& modelTranslation: dogeTranslations)
+        {
+            model = glm::translate(glm::mat4(1.0f), modelTranslation);    
+            mvp = proj * view * model;
+            u_MVP.Update(mvp);
+            renderer.Draw(vertexArray, indexBuffer, shader);
+        }
         // imgui test window
         ImGui_ImplGlfwGL3_NewFrame();
         {
-            ImGui::SliderFloat3("Translation", &translation.x, -500, 500);
+            ImGui::SliderFloat3("View translation", &viewTranslation.x, 0, m_Width);
+            ImGui::SliderFloat3("Doge 1 translation", &dogeTranslations[0].x, 0, m_Width);
+            ImGui::SliderFloat3("Doge 2 translation", &dogeTranslations[1].x, 0, m_Width);
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         }
         ImGui::Render();
         ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+        // update window
         GLCall(glfwSwapBuffers(window)); 
         GLCall(glfwPollEvents());
     }
