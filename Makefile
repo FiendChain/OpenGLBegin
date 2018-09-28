@@ -4,7 +4,7 @@ SRC := sources
 
 ifeq ($(OS),Windows_NT)
 	CFLAGS	:= -DDGLEW_NO_GLU -DGLEW_BUILD -static -std=c++17 -g 
-	LLIB   	:= -I .\libraries\include -L .\libraries\lib
+	LLIB   	:= -I $(SRC)\vendor -I .\libraries\include -L .\libraries\lib
 	LDFLAGS := -lglfw3 -lopengl32 -luser32 -lgdi32 -lshell32 -lglu32 -lglew32
 	WFLAGS	:= -Wall
 else
