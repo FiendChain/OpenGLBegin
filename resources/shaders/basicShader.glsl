@@ -28,7 +28,7 @@ in vec2 v_TextCoord;
 
 void main() {
     // rgba
-    // vec4 texColor = texture(u_Texture, v_TextCoord);
-    color = u_Color;
+    vec4 texColor = texture(u_Texture, v_TextCoord);
+    color = (u_Color + texColor) / 2.0;
 }
 #endshader

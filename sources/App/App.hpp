@@ -20,11 +20,16 @@ struct VertexData {
 };
 
 class App {
-    public:
-        App();
-        void run();
     private:
         GLFWwindow* window;
-        void render();
-        void initOpenGL();
+        unsigned int m_Width;
+        unsigned int m_Height;
+    public:
+        App(unsigned int width, unsigned int height);
+        void Run();
+        void EnableDebug();
+    private:
+        void Render();
+        bool InitGLFW();
+        bool InitGlew();
 };
