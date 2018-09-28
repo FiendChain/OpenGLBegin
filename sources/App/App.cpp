@@ -14,6 +14,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+// imguie
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw_gl3.h>
+
 App::App(unsigned int width, unsigned int height) 
     : m_Width(width), m_Height(height)
 {
@@ -24,6 +28,8 @@ App::App(unsigned int width, unsigned int height)
 
 void App::Run() {
     Render();
+    ImGui_ImplGlfwGL3_Shutdown();
+    ImGui::DestroyContext();
     glfwTerminate(); // terminate the opengl library? or context?
 }
 
@@ -44,7 +50,8 @@ void App::Render() {
     // projection matrix
     glm::mat4 proj = glm::ortho(0.0f, (float)m_Width, 0.0f, (float)m_Height, -1.0f, 1.0f);
     // view matrix
-    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
+    glm::vec3 translation(0, 0, 0);
+    glm::mat4 view = glm::translate(glm::mat4(1.0f), translation);
     // model
     glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
     // Model * View * Projection matrix
@@ -66,7 +73,7 @@ void App::Render() {
     Shader shader("resources/shaders/basicShader.glsl");
     UniformRainbow u_Rainbow; 
     shader.AddUniform("u_Color", &u_Rainbow);
-    shader.SetUniform("u_MVP", &u_MVP);
+    shader.AddUniform("u_MVP", &u_MVP);
 
     Texture texture("resources/textures/doge.png");
     texture.Bind(0);
@@ -78,11 +85,29 @@ void App::Render() {
     indexBuffer.Unbind();
 
     Renderer renderer;
+
+    ImGui::CreateContext();
+    ImGui_ImplGlfwGL3_Init(window, true);
+    ImGui::StyleColorsDark();
+
     while (!glfwWindowShouldClose(window)) 
     {
+        // renderer
         renderer.Clear();
+        // render
         renderer.Draw(vertexArray, indexBuffer, shader);
         u_Rainbow.Update();
+        view = glm::translate(glm::mat4(1.0f), translation);
+        mvp = proj * view * model;
+        u_MVP.Update(mvp);
+        // imgui test window
+        ImGui_ImplGlfwGL3_NewFrame();
+        {
+            ImGui::SliderFloat3("Translation", &translation.x, -500, 500);
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        }
+        ImGui::Render();
+        ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
         GLCall(glfwSwapBuffers(window)); 
         GLCall(glfwPollEvents());
     }

@@ -29,6 +29,7 @@ class UniformMat4f: public Uniform
     public:
         UniformMat4f(glm::mat4 matrix);
         void Apply(int location) const;
+        void Update(glm::mat4 matrix);
 };
 
 template <typename T>

@@ -60,6 +60,11 @@ void UniformMat4f::Apply(int location) const
     GLCall(glUniformMatrix4fv(location, 1, GL_FALSE, &m_Matrix[0][0]));
 }
 
+void UniformMat4f::Update(glm::mat4 matrix)
+{
+    m_Matrix = matrix;
+}
+
 // rainbow
 void UniformRainbow::Apply(int location) const
 {
