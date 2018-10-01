@@ -4,21 +4,6 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
-struct Position {
-    float x;
-    float y;
-};
-
-struct TextCoords {
-    float x;
-    float y;
-};
-
-struct VertexData {
-    struct Position position;
-    struct TextCoords textCoords;
-};
-
 class App {
     private:
         GLFWwindow* window;

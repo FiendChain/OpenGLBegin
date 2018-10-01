@@ -6,8 +6,8 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/libraries/include",
                 "${workspaceFolder}/sources/vendor",
-                "C:/MinGW/lib/gcc/mingw32/6.3.0/",
-                "C:/MinGW/lib/gcc/mingw32/6.3.0/include/c++"
+                "${workspaceFolder}/sources/App",
+                "C:/MinGW/lib/gcc/mingw32/6.3.0/"
             ],
             "defines": [
                 "_DEBUG",

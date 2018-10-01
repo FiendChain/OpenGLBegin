@@ -15,7 +15,12 @@ enum ColourState {
 class RainbowColour {
     public:
         RainbowColour(float _rate=0.05f);
-        float r, g, b, a;
+        union {
+            struct {
+                float r, g, b, a;
+            };
+            float components[4];
+        };
         void setRate(float _rate);
         void update();
     private:
