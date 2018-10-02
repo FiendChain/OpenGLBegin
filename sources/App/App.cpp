@@ -14,6 +14,7 @@
 #include "Tests/TestRainbow.hpp"
 #include "Tests/TestDoge.hpp"
 #include "Tests/TestTexture.hpp"
+#include "Tests/TestMenu.hpp"
 
 #include <iostream>
 #include <glm/glm.hpp>
@@ -38,24 +39,22 @@ void App::Run() {
 }
 
 void App::Render() {
-    //test::TestClearColour test;
-    //test::TestRainbow test;
-    //test::TestDoge test(m_Width, m_Height);
-    test::TestTexture test("resources/textures/doge.png");
+    test::TestMenu testMenu;
+    testMenu.AddTest<test::TestClearColour>("Clear colour");
+    testMenu.AddTest<test::TestDoge>("Doge", m_Width, m_Height);
+    testMenu.AddTest<test::TestRainbow>("Rainbow");
+    testMenu.AddTest<test::TestTexture>("Texture", "resources/textures/doge.png");
     Renderer renderer;
     while (!glfwWindowShouldClose(window)) 
     {
         renderer.Clear();
-        test.OnUpdate(0.0f);
-        test.OnRender();
-        
+        testMenu.OnUpdate(0.0f);
+        testMenu.OnRender();
 
         // imgui test window
         ImGui_ImplGlfwGL3_NewFrame();
         {
-            // testRainbow.OnImGuiRender();
-            // testDoge.OnImGuiRender();
-            test.OnImGuiRender();
+            testMenu.OnImGuiRender();
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         }
         ImGui::Render();

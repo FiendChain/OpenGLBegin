@@ -32,7 +32,7 @@ TestTexture::TestTexture(const std::string& filepath)
       shader("resources/shaders/textureTest.glsl"),
       u_Texture(std::make_shared<Uniform1<int>>(0)),
       u_MVP(std::make_shared<UniformMat4f>(glm::mat4(1.0f))),
-      translation(0.0f), rotation(0.0f, 0.0f, 1.0f), scale(1.0f),
+      translation(0.0f), rotation(0.0f, 0.0f, 1.0f), scale(1.0f), m_Angle(0),
       vertexBuffer(vertexData, sizeof(vertexData)),
       indexBuffer(indices, 6) 
 {
