@@ -31,14 +31,19 @@ App::App(unsigned int width, unsigned int height)
     std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
 }
 
-void App::Run() {
-    Render();
-    ImGui_ImplGlfwGL3_Shutdown();
+App::~App()
+{
     ImGui::DestroyContext();
     glfwTerminate(); // terminate the opengl library? or context?
 }
 
-void App::Render() {
+void App::Run() 
+{
+    Render();
+}
+
+void App::Render() 
+{
     test::TestMenu testMenu;
     testMenu.AddTest<test::TestClearColour>("Clear colour");
     testMenu.AddTest<test::TestDoge>("Doge", m_Width, m_Height);
@@ -63,5 +68,6 @@ void App::Render() {
         GLCall(glfwSwapBuffers(window.get())); 
         GLCall(glfwPollEvents());
     }
+    ImGui_ImplGlfwGL3_Shutdown();
 }
 

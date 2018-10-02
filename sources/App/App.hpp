@@ -5,12 +5,10 @@
 #include <string>
 #include <memory>
 
-struct DestroyglfwWin{
-
+struct DestroyglfwWin {
     void operator()(GLFWwindow* ptr){
-         glfwDestroyWindow(ptr);
+        glfwDestroyWindow(ptr);
     }
-
 };
 
 class App {
@@ -20,6 +18,7 @@ class App {
         unsigned int m_Height;
     public:
         App(unsigned int width, unsigned int height);
+        ~App();
         void Run();
         void EnableDebug();
     private:
