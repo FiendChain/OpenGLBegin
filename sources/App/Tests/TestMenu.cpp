@@ -45,11 +45,23 @@ void TestMenu::OnRender()
 }
 
 void TestMenu::OnImGuiRender()
+{   
+    DrawTestMenu();
+    DrawActiveTests();   
+}
+
+void TestMenu::DrawTestMenu()
 {
+    ImGui::Begin("Test menu");
     for (auto& test: m_TestList)
     {
         ImGui::Checkbox(test.first.c_str(), &test.second.enabled);
     }
+    ImGui::End();
+}
+
+void TestMenu::DrawActiveTests()
+{
     for (auto& testEntry: m_TestList)
     {
         if (testEntry.second.enabled) 

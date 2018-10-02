@@ -28,5 +28,8 @@ class TestMenu: public Test
         void OnUpdate(float deltaTime) override;
         void OnRender() override;
         void OnImGuiRender() override;
+    private:
+        void DrawTestMenu();
+        void DrawActiveTests();
 };
 }
