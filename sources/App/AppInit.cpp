@@ -6,6 +6,7 @@
 #include <iostream>
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw_gl3.h>
+#include <memory>
 
 bool App::InitGLFW() {
     if (glfwInit() == GL_FALSE) {
@@ -17,15 +18,15 @@ bool App::InitGLFW() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     // create window with opengl context
-    window = glfwCreateWindow(m_Width, m_Height, "OpenGL app", NULL, NULL);
-    if (!window) 
+    window = std::unique_ptr<GLFWwindow, DestroyglfwWin>(glfwCreateWindow(m_Width, m_Height, "OpenGL app", NULL, NULL));
+    if (!window.get()) 
     {
         glfwTerminate();
         std::cerr << "Failed to create opengl window" << std::endl;
         return false;
     }
     // make window current context
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(window.get());
     glfwSwapInterval(1);
 }
 
@@ -43,7 +44,7 @@ bool App::InitGlew()
 bool App::InitImGui()
 {
     ImGui::CreateContext();
-    ImGui_ImplGlfwGL3_Init(window, true);
+    ImGui_ImplGlfwGL3_Init(window.get(), true);
     ImGui::StyleColorsDark();
     return true;
 }

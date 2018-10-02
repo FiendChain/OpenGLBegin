@@ -45,7 +45,7 @@ void App::Render() {
     testMenu.AddTest<test::TestRainbow>("Rainbow");
     testMenu.AddTest<test::TestTexture>("Texture", "resources/textures/doge.png");
     Renderer renderer;
-    while (!glfwWindowShouldClose(window)) 
+    while (!glfwWindowShouldClose(window.get())) 
     {
         renderer.Clear();
         testMenu.OnUpdate(0.0f);
@@ -60,7 +60,7 @@ void App::Render() {
         ImGui::Render();
         ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
         
-        GLCall(glfwSwapBuffers(window)); 
+        GLCall(glfwSwapBuffers(window.get())); 
         GLCall(glfwPollEvents());
     }
 }
