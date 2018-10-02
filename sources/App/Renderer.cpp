@@ -6,12 +6,14 @@
 #include <GL/glew.h>
 
 Renderer::Renderer()
+    : m_ClearColour(0.0f, 0.0f, 0.0f, 1.0f)
 {
 
 }
 
 void Renderer::Clear() const
 {
+    GLCall(glClearColor(m_ClearColour.r, m_ClearColour.g, m_ClearColour.b, m_ClearColour.a));
     GLCall(glClear(GL_COLOR_BUFFER_BIT));
 }
 
