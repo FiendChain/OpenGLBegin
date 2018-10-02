@@ -1,6 +1,6 @@
 #include "Uniform.hpp"
 #include "OpenGL.hpp"
-#include "../RainbowColour/RainbowColour.hpp"
+#include "RainbowColour/RainbowColour.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 

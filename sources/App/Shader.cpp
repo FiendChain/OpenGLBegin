@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <memory>
 
 struct ShaderFile 
 {
@@ -34,14 +35,14 @@ Shader::~Shader()
     GLCall(glDeleteProgram(m_RendererID)); 
 }
 
-void Shader::AddUniform(const std::string& name, const Uniform *uniform)
+void Shader::AddUniform(const std::string& name, std::shared_ptr<Uniform> uniform)
 {
     int location = GetUniformLocation(name);
     m_Uniforms.push_back(uniform);
     m_Locations.push_back(location);
 }
 
-void Shader::SetUniform(const std::string& name, const Uniform *uniform)
+void Shader::SetUniform(const std::string& name, std::shared_ptr<Uniform> uniform)
 {
     Bind();
     int location = GetUniformLocation(name);
@@ -53,7 +54,7 @@ void Shader::Bind() const
     GLCall(glUseProgram(m_RendererID));
     for (unsigned int i = 0; i < m_Uniforms.size(); i++)
     {
-        const Uniform *uniform = m_Uniforms.at(i);
+        const auto& uniform = m_Uniforms.at(i);
         int location = m_Locations.at(i);
         uniform->Apply(location);
     }

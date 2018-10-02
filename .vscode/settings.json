@@ -35,7 +35,10 @@
         "typeinfo": "cpp",
         "cstdarg": "cpp",
         "iostream": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "cstddef": "cpp",
+        "cstring": "cpp",
+        "memory": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Disabled"
 }

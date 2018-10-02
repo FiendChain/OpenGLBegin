@@ -48,9 +48,13 @@ namespace glm
 #				endif
 			};
 #		else
-			union { T x, r, s; };
-			union { T y, g, t; };
-			union { T z, b, p; };
+			union
+			{
+				struct{ T x, y, z; };
+				struct{ T r, g, b; };
+				struct{ T s, t, p; };
+				T components[3];
+			};
 
 #			if GLM_CONFIG_SWIZZLE == GLM_SWIZZLE_FUNCTION
 				GLM_SWIZZLE_GEN_VEC_FROM_VEC3(T, Q)
