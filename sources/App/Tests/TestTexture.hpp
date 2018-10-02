@@ -16,19 +16,19 @@ namespace test
 class TestTexture: public Test
 {
     private:
-        const std::string& m_Filepath;
-        Renderer renderer;
-        Texture texture; // resources
-        Shader shader;
-        VertexArray vertexArray; // buffers
-        VertexBuffer vertexBuffer;
-        VertexBufferLayout vertexBufferLayout;
-        IndexBuffer indexBuffer;
+        std::string m_Filepath;
+        Renderer m_Renderer;
+        Texture m_Texture; // resources
+        Shader m_Shader;
+        VertexArray m_VertexArray; // buffers
+        VertexBuffer m_VertexBuffer;
+        VertexBufferLayout m_VertexBufferLayout;
+        IndexBuffer m_IndexBuffer;
         std::shared_ptr<Uniform1<int>> u_Texture; // uniforms
         std::shared_ptr<UniformMat4f> u_MVP;
-        glm::vec3 rotation;
-        glm::vec3 translation;
-        glm::vec3 scale;
+        glm::vec3 m_Rotation;
+        glm::vec3 m_Translation;
+        glm::vec3 m_Scale;
         float m_Angle;
     public:
         TestTexture(const std::string& filepath);

@@ -28,22 +28,22 @@ namespace test
 
 TestTexture::TestTexture(const std::string& filepath)
     : m_Filepath(filepath),
-      texture(filepath),
-      shader("resources/shaders/textureTest.glsl"),
+      m_Texture(filepath),
+      m_Shader("resources/shaders/textureTest.glsl"),
       u_Texture(std::make_shared<Uniform1<int>>(0)),
       u_MVP(std::make_shared<UniformMat4f>(glm::mat4(1.0f))),
-      translation(0.0f), rotation(0.0f, 0.0f, 1.0f), scale(1.0f), m_Angle(0),
-      vertexBuffer(vertexData, sizeof(vertexData)),
-      indexBuffer(indices, 6) 
+      m_Translation(0.0f), m_Rotation(0.0f, 0.0f, 1.0f), m_Scale(1.0f), m_Angle(0),
+      m_VertexBuffer(vertexData, sizeof(vertexData)),
+      m_IndexBuffer(indices, 6) 
 {
     // set layout
-    vertexBufferLayout.Push<float>(2);
-    vertexBufferLayout.Push<float>(2);
-    vertexArray.AddBuffer(vertexBuffer, vertexBufferLayout);
+    m_VertexBufferLayout.Push<float>(2);
+    m_VertexBufferLayout.Push<float>(2);
+    m_VertexArray.AddBuffer(m_VertexBuffer, m_VertexBufferLayout);
     // bind texture
-    texture.Bind(0);
-    shader.AddUniform("u_Texture", u_Texture);
-    shader.AddUniform("u_MVP", u_MVP);
+    m_Texture.Bind(0);
+    m_Shader.AddUniform("u_Texture", u_Texture);
+    m_Shader.AddUniform("u_MVP", u_MVP);
 }
 
 TestTexture::~TestTexture()
@@ -53,18 +53,19 @@ TestTexture::~TestTexture()
 
 void TestTexture::OnRender()
 {
-    glm::mat4 model = glm::scale(glm::mat4(1.0f), scale);
-    model = glm::translate(model, translation);
-    model = glm::rotate(model, (float)m_Angle, rotation);
+    glm::mat4 model = glm::scale(glm::mat4(1.0f), m_Scale);
+    model = glm::translate(model, m_Translation);
+    model = glm::rotate(model, (float)m_Angle, m_Rotation);
     u_MVP->Update(model);
-    renderer.Draw(vertexArray, indexBuffer, shader);
+    m_Renderer.Draw(m_VertexArray, m_IndexBuffer, m_Shader);
 }
 
 void TestTexture::OnImGuiRender()
 {
-    ImGui::SliderFloat3("Translation", translation.components, 0, 1.0f);
-    ImGui::SliderFloat3("Rotation", rotation.components, 0, 1.0f);
-    ImGui::SliderFloat3("Scale", scale.components, 0, 1.0f);
+    ImGui::Text("Rendering texture %s", m_Texture.GetFilePath().c_str());
+    ImGui::SliderFloat3("Translation", m_Translation.components, 0, 1.0f);
+    ImGui::SliderFloat3("Rotation", m_Rotation.components, 0, 1.0f);
+    ImGui::SliderFloat3("Scale", m_Scale.components, 0, 1.0f);
     ImGui::SliderAngle("Angle", &m_Angle, 0, 360);
 }
 
