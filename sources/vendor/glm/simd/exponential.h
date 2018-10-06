@@ -2,6 +2,7 @@
 /// @file glm/simd/experimental.h
 
 #pragma once
+#pragma GCC diagnostic ignored "-Wpsabi"
 
 #include "platform.h"
 
