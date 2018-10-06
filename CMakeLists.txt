@@ -51,6 +51,7 @@ include_directories (build/${PROJECT_BINARY_DIR})
 include_directories (${PROJECT_SOURCE_DIR}/vendor)
 # glew
 if (BUILD_OPENGL_LIB)
+    set (BUILD_UTILS OFF CACHE BOOL "" FORCE)
     include_directories (${PROJECT_SOURCE_DIR}/vendor/glew/include)
     add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/glew/build/cmake)
     set (EXTRA_LIBS ${EXTRA_LIBS} glew_s)
