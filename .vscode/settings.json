@@ -41,5 +41,6 @@
         "memory": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Disabled",
-    "cmake.configureOnOpen": true
+    "cmake.configureOnOpen": true,
+    "C_Cpp.configurationWarnings": "Disabled"
 }

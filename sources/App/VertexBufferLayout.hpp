@@ -1,7 +1,6 @@
 #pragma once
-#include "Errors.hpp"
+#include "OpenGL.hpp"
 #include <vector>
-#include <GL/glew.h>
 
 struct VertexBufferElement
 {
@@ -27,7 +26,7 @@ class VertexBufferLayout
         VertexBufferLayout();
         ~VertexBufferLayout();
         template <typename T>
-        void Push(unsigned int count);
+        void Push(unsigned int count, GLboolean normalised=GL_TRUE);
         inline const std::vector<VertexBufferElement>& GetElements() const { return m_Elements; };
         inline unsigned int GetStride() const { return m_Stride; };
     private:

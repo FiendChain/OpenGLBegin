@@ -21,6 +21,7 @@ class App {
         ~App();
         void Run();
         void EnableDebug();
+        void Enable3D();
     private:
         void Render();
         bool InitGLFW();

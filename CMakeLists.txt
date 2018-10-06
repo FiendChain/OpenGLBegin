@@ -6,9 +6,25 @@ set (PROJECT_BINARY_DIR "bin")
 set (PROJECT_SOURCE_DIR "sources")
 set (PROJECT_LIBRARY_DIR "libraries")
 
-file (GLOB APP_SRC_FILES 
-    ${PROJECT_SOURCE_DIR}/App/*.cpp 
-    ${PROJECT_SOURCE_DIR}/App/Tests/*.cpp)
+set (APP_SRC_FILES 
+    ${PROJECT_SOURCE_DIR}/App/App.cpp
+    ${PROJECT_SOURCE_DIR}/App/AppInit.cpp
+    ${PROJECT_SOURCE_DIR}/App/Debug.cpp
+    ${PROJECT_SOURCE_DIR}/App/Errors.cpp
+    ${PROJECT_SOURCE_DIR}/App/IndexBuffer.cpp
+    ${PROJECT_SOURCE_DIR}/App/Renderer.cpp
+    ${PROJECT_SOURCE_DIR}/App/Shader.cpp
+    ${PROJECT_SOURCE_DIR}/App/Texture.cpp
+    ${PROJECT_SOURCE_DIR}/App/Uniform.cpp
+    ${PROJECT_SOURCE_DIR}/App/VertexArray.cpp
+    ${PROJECT_SOURCE_DIR}/App/VertexBuffer.cpp
+    ${PROJECT_SOURCE_DIR}/App/VertexBufferLayout.cpp
+    ${PROJECT_SOURCE_DIR}/App/Tests/TestClearColour.cpp
+    ${PROJECT_SOURCE_DIR}/App/Tests/TestCube.cpp
+    ${PROJECT_SOURCE_DIR}/App/Tests/TestDoge.cpp
+    ${PROJECT_SOURCE_DIR}/App/Tests/TestMenu.cpp
+    ${PROJECT_SOURCE_DIR}/App/Tests/TestRainbow.cpp
+    ${PROJECT_SOURCE_DIR}/App/Tests/TestTexture.cpp)
 file (GLOB VENDOR_SRC_FILES 
     ${PROJECT_SOURCE_DIR}/vendor/imgui/*.cpp
     ${PROJECT_SOURCE_DIR}/vendor/RainbowColour/*.cpp

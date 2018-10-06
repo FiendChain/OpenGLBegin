@@ -55,3 +55,9 @@ void App::EnableDebug()
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
     glDebugMessageCallback(HandleDebug, nullptr);
 }
+
+void App::Enable3D() 
+{
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+}

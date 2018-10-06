@@ -1,24 +1,14 @@
 #include "App.hpp"
-#include "RainbowColour/RainbowColour.hpp"
 #include "OpenGL.hpp"
-#include "Shader.hpp"  
-#include "Uniform.hpp"
-#include "IndexBuffer.hpp"
-#include "VertexArray.hpp"
-#include "VertexBuffer.hpp"
-#include "VertexBufferLayout.hpp"
-#include "Renderer.hpp"
-#include "Texture.hpp"
 
 #include "Tests/TestClearColour.hpp"
 #include "Tests/TestRainbow.hpp"
 #include "Tests/TestDoge.hpp"
 #include "Tests/TestTexture.hpp"
 #include "Tests/TestMenu.hpp"
+#include "Tests/TestCube.hpp"
 
 #include <iostream>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw_gl3.h>
 
@@ -28,6 +18,7 @@ App::App(unsigned int width, unsigned int height)
     ASSERT(InitGLFW());
     ASSERT(InitGlew());
     ASSERT(InitImGui());
+    Enable3D();
     std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
 }
 
@@ -49,6 +40,7 @@ void App::Render()
     testMenu.AddTest<test::TestDoge>("Doge", m_Width, m_Height);
     testMenu.AddTest<test::TestRainbow>("Rainbow");
     testMenu.AddTest<test::TestTexture>("Texture", "resources/textures/doge.png");
+    testMenu.AddTest<test::TestCube>("Cube", m_Width, m_Height);
     Renderer renderer;
     while (!glfwWindowShouldClose(window.get())) 
     {
