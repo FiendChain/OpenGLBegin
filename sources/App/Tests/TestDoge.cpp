@@ -80,13 +80,13 @@ void TestDoge::OnRender()
 
 void TestDoge::OnImGuiRender()
 {
-    ImGui::SliderFloat2("View translation", m_ViewTranslation.components, -(float)m_Width, (float)m_Width);
+    ImGui::SliderFloat2("View translation", &m_ViewTranslation.x, -(float)m_Width, (float)m_Width);
     for (unsigned int i = 0; i < m_ModelTranslations.size(); i++)
     {
         auto& modelTranslation = m_ModelTranslations.at(i);
         std::stringstream description;
         description << "Doge " << i << " translation";
-        ImGui::SliderFloat2(description.str().c_str(), modelTranslation.components, -(float)m_Width, (float)m_Width);
+        ImGui::SliderFloat2(description.str().c_str(), &modelTranslation.x, -(float)m_Width, (float)m_Width);
     }
 }
 

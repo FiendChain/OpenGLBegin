@@ -1,0 +1,2 @@
+#define OpenGLBegin_VERSION_MAJOR @OpenGLBegin_VERSION_MAJOR@
+#define OpenGLBegin_VERSION_MINOR @OpenGLBegin_VERSION_MINOR@ 

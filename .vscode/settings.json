@@ -40,5 +40,6 @@
         "cstring": "cpp",
         "memory": "cpp"
     },
-    "C_Cpp.intelliSenseEngineFallback": "Disabled"
+    "C_Cpp.intelliSenseEngineFallback": "Disabled",
+    "cmake.configureOnOpen": true
 }

@@ -2,3 +2,4 @@ objects/
 main.exe
 main
 imgui.ini
+build/

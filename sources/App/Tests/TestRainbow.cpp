@@ -29,7 +29,7 @@ void TestRainbow::OnRender()
 
 void TestRainbow::OnImGuiRender()
 {
-    ImGui::ColorEdit4("Clear colour", m_Rainbow.components);
+    ImGui::ColorEdit4("Clear colour", &m_Rainbow.r);
 }
 
 }

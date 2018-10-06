@@ -63,9 +63,9 @@ void TestTexture::OnRender()
 void TestTexture::OnImGuiRender()
 {
     ImGui::Text("Rendering texture %s", m_Texture.GetFilePath().c_str());
-    ImGui::SliderFloat3("Translation", m_Translation.components, 0, 1.0f);
-    ImGui::SliderFloat3("Rotation", m_Rotation.components, 0, 1.0f);
-    ImGui::SliderFloat3("Scale", m_Scale.components, 0, 1.0f);
+    ImGui::SliderFloat3("Translation", &m_Translation.x, 0, 1.0f);
+    ImGui::SliderFloat3("Rotation", &m_Rotation.x, 0, 1.0f);
+    ImGui::SliderFloat3("Scale", &m_Scale.x, 0, 1.0f);
     ImGui::SliderAngle("Angle", &m_Angle, 0, 360);
 }
 

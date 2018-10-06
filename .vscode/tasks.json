@@ -4,9 +4,15 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build (make)",
+            "label": "cmake",
             "type": "shell",
-            "command": "make",
+            "command": "cmake",
+            "args": [
+                "--build", "${workspaceFolder}/build",
+                "--config", "Debug",
+                "--target", "all",
+                "--", "-j", "8"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
