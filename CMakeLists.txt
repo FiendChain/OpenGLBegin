@@ -25,6 +25,7 @@ set (APP_SRC_FILES
     ${PROJECT_SOURCE_DIR}/App/Tests/TestCubeTexture.cpp
     ${PROJECT_SOURCE_DIR}/App/Tests/TestDoge.cpp
     ${PROJECT_SOURCE_DIR}/App/Tests/TestMenu.cpp
+    ${PROJECT_SOURCE_DIR}/App/Tests/TestModel.cpp
     ${PROJECT_SOURCE_DIR}/App/Tests/TestRainbow.cpp
     ${PROJECT_SOURCE_DIR}/App/Tests/TestTexture.cpp)
 

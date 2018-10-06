@@ -8,6 +8,7 @@
 #include "Tests/TestMenu.hpp"
 #include "Tests/TestCube.hpp"
 #include "Tests/TestCubeTexture.hpp"
+#include "Tests/TestModel.hpp"
 
 #include <iostream>
 #include <imgui/imgui.h>
@@ -44,6 +45,7 @@ void App::Render()
     testMenu.AddTest<test::TestCube>("Cube", m_Width, m_Height);
     testMenu.AddTest<test::TestCubeTexture>("Dice", "resources/textures/dice.png", m_Width, m_Height);
     testMenu.AddTest<test::TestCubeTexture>("Rainbow Cube", "resources/textures/rainbow_cube.png", m_Width, m_Height);
+    testMenu.AddTest<test::TestModel>("Test Model", "resources/models/cube.blend", m_Width, m_Height);
     Renderer renderer;
     while (!glfwWindowShouldClose(window.get())) 
     {
