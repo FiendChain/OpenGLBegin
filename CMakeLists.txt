@@ -4,7 +4,6 @@ project (OpenGL_Tutorial)
 # set directories
 set (PROJECT_BINARY_DIR "bin")
 set (PROJECT_SOURCE_DIR "sources")
-set (PROJECT_LIBRARY_DIR "libraries")
 
 set (APP_SRC_FILES 
     ${PROJECT_SOURCE_DIR}/App/App.cpp
@@ -27,8 +26,6 @@ set (APP_SRC_FILES
     ${PROJECT_SOURCE_DIR}/App/Tests/TestRainbow.cpp
     ${PROJECT_SOURCE_DIR}/App/Tests/TestTexture.cpp)
 
-# options
-set (BUILD_OPENGL_LIB ON CACHE BOOL "" FORCE)
 # set compiler
 set (CMAKE_C_COMPILER C:/MinGW/bin/gcc.exe)
 set (CMAKE_CXX_COMPILER C:/MinGW/bin/g++.exe)
@@ -46,43 +43,33 @@ include_directories (build/${PROJECT_BINARY_DIR})
 
 # include vendor libraries
 include_directories (${PROJECT_SOURCE_DIR}/vendor)
+
 # glew
-if (BUILD_OPENGL_LIB)
-    set (BUILD_UTILS OFF CACHE BOOL "" FORCE)
-    include_directories (${PROJECT_SOURCE_DIR}/vendor/glew/include)
-    add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/glew/build/cmake)
-    set (EXTRA_LIBS ${EXTRA_LIBS} glew_s)
-else ()
-    add_library(glew32s STATIC IMPORTED)
-    set_property(TARGET glew32s PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/${PROJECT_LIBRARY_DIR}/lib/GLEW/libglew32d.a)
-    set (EXTRA_LIBS ${EXTRA_LIBS} glew32s)
-endif ()
+set (BUILD_UTILS OFF CACHE BOOL "" FORCE)
+include_directories (${PROJECT_SOURCE_DIR}/vendor/glew/include)
+add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/glew/build/cmake)
+set (EXTRA_LIBS ${EXTRA_LIBS} glew_s)
+
 # glfw
-if (BUILD_OPENGL_LIB)
-    set (GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-    set (GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-    set (GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-    include_directories (${PROJECT_SOURCE_DIR}/vendor/glfw/include)
-    add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/glfw)
-    set (EXTRA_LIBS ${EXTRA_LIBS} glfw)
-else ()
-    add_library(glfw3 STATIC IMPORTED)
-    set_property(TARGET glfw3 PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/${PROJECT_LIBRARY_DIR}/lib/GLFW/libglfw3.a)
-    set (EXTRA_LIBS ${EXTRA_LIBS} glfw3)
-endif ()
-# if not building glew or glfw
-if (NOT BUILD_OPENGL_LIB)
-    include_directories (${PROJECT_LIBRARY_DIR}/include)
-endif ()
+set (GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set (GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set (GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+include_directories (${PROJECT_SOURCE_DIR}/vendor/glfw/include)
+add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/glfw)
+set (EXTRA_LIBS ${EXTRA_LIBS} glfw)
+
 # glm
 add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/glm)
 set (EXTRA_LIBS ${EXTRA_LIBS} glm_static)
+
 # imgui
 add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/imgui)
 set (EXTRA_LIBS ${EXTRA_LIBS} imgui)
+
 # stb_image
 add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/stb_image)
 set (EXTRA_LIBS ${EXTRA_LIBS} stb_image)
+
 # rainbow colour
 add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/RainbowColour)
 set (EXTRA_LIBS ${EXTRA_LIBS} RainbowColour)
