@@ -42,7 +42,8 @@ void App::Render()
     testMenu.AddTest<test::TestRainbow>("Rainbow");
     testMenu.AddTest<test::TestTexture>("Texture", "resources/textures/doge.png");
     testMenu.AddTest<test::TestCube>("Cube", m_Width, m_Height);
-    testMenu.AddTest<test::TestCubeTexture>("Dice", "resources/textures/Dice.png", m_Width, m_Height);
+    testMenu.AddTest<test::TestCubeTexture>("Dice", "resources/textures/dice.png", m_Width, m_Height);
+    testMenu.AddTest<test::TestCubeTexture>("Rainbow Cube", "resources/textures/rainbow_cube.png", m_Width, m_Height);
     Renderer renderer;
     while (!glfwWindowShouldClose(window.get())) 
     {
