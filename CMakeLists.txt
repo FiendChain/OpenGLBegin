@@ -92,7 +92,7 @@ target_compile_definitions (App PRIVATE ${GLEW_DFLAGS})
 add_executable (main ${PROJECT_SOURCE_DIR}/main.cpp)
 set_target_properties (main PROPERTIES EXECUTABLE_OUTPUT_PATH ".")
 target_link_libraries (main App)
-target_compile_options (main PRIVATE -std=c++17)
+target_compile_options (main PRIVATE -std=c++17 -Wpsabi -O3)
 
 install (TARGETS main DESTINATION bin)
 install (FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h" DESTINATION include)

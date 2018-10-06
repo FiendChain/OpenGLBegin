@@ -1,10 +1,5 @@
 #include "TestMenu.hpp"
-#include "TestClearColour.hpp"
-#include "TestDoge.hpp"
-#include "TestTexture.hpp"
-#include "TestRainbow.hpp"
 #include <imgui/imgui.h>
-#include <memory>
 #include <bits/move.h>
 
 namespace test
@@ -24,10 +19,9 @@ void TestMenu::OnUpdate(float deltaTime)
 {
     for (auto& testEntry: m_TestList)
     {
-        if (testEntry.second.enabled) 
+        if (testEntry.enabled) 
         {
-            std::unique_ptr<Test>& test = testEntry.second.test;
-            test->OnUpdate(deltaTime);
+            testEntry.test->OnUpdate(deltaTime);
         }
     }
 }
@@ -36,10 +30,9 @@ void TestMenu::OnRender()
 {
     for (auto& testEntry: m_TestList)
     {
-        if (testEntry.second.enabled) 
+        if (testEntry.enabled) 
         {
-            std::unique_ptr<Test>& test = testEntry.second.test;
-            test->OnRender();
+            testEntry.test->OnRender();
         }
     }
 }
@@ -55,7 +48,7 @@ void TestMenu::DrawTestMenu()
     ImGui::Begin("Test menu");
     for (auto& test: m_TestList)
     {
-        ImGui::Checkbox(test.first.c_str(), &test.second.enabled);
+        ImGui::Checkbox(test.name.c_str(), &test.enabled);
     }
     ImGui::End();
 }
@@ -64,11 +57,10 @@ void TestMenu::DrawActiveTests()
 {
     for (auto& testEntry: m_TestList)
     {
-        if (testEntry.second.enabled) 
+        if (testEntry.enabled) 
         {
-            std::unique_ptr<Test>& test = testEntry.second.test;
-            ImGui::Begin(testEntry.first.c_str(), &testEntry.second.enabled);
-            test->OnImGuiRender();
+            ImGui::Begin(testEntry.name.c_str(), &testEntry.enabled);
+            testEntry.test->OnImGuiRender();
             ImGui::End();
         }
     }
