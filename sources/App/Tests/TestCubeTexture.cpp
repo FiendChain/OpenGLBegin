@@ -77,6 +77,7 @@ void TestCubeTexture::OnUpdate(float deltaTime)
 void TestCubeTexture::OnRender()
 {
     u_MVP->Update(m_MVP_Control.GetMVP());
+    m_Texture.Bind(0);
     m_Renderer.Draw(m_VertexArray, m_IndexBuffer, m_Shader);
 }
 

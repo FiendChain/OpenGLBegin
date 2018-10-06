@@ -74,6 +74,7 @@ void TestDoge::OnRender()
     {
         glm::mat4 model = glm::translate(glm::mat4(1.0f), modelTranslation);    
         u_MVP->Update(m_Projection * view * model);
+        m_Texture.Bind(0);
         m_Renderer.Draw(m_VertexArray, m_IndexBuffer, m_Shader);
     }
 }

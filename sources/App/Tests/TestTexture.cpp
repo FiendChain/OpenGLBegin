@@ -57,6 +57,7 @@ void TestTexture::OnRender()
     model = glm::translate(model, m_Translation);
     model = glm::rotate(model, (float)m_Angle, m_Rotation);
     u_MVP->Update(model);
+    m_Texture.Bind(0);
     m_Renderer.Draw(m_VertexArray, m_IndexBuffer, m_Shader);
 }
 
