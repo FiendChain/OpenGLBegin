@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <imgui/imgui.h>
-#include <imgui/imgui_impl_glfw_gl3.h>
+#include "ImGui.h"
 
 App::App(unsigned int width, unsigned int height) 
     : m_Width(width), m_Height(height)

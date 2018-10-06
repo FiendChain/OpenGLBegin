@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <imgui/imgui.h>
-#include <imgui/imgui_impl_glfw_gl3.h>
+#include "ImGui.h"
 #include <memory>
 
 bool App::InitGLFW() {

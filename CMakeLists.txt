@@ -11,6 +11,7 @@ set (APP_SRC_FILES
     ${PROJECT_SOURCE_DIR}/App/AppInit.cpp
     ${PROJECT_SOURCE_DIR}/App/Debug.cpp
     ${PROJECT_SOURCE_DIR}/App/Errors.cpp
+    ${PROJECT_SOURCE_DIR}/App/ImGui.cpp
     ${PROJECT_SOURCE_DIR}/App/IndexBuffer.cpp
     ${PROJECT_SOURCE_DIR}/App/Renderer.cpp
     ${PROJECT_SOURCE_DIR}/App/Shader.cpp
@@ -25,10 +26,6 @@ set (APP_SRC_FILES
     ${PROJECT_SOURCE_DIR}/App/Tests/TestMenu.cpp
     ${PROJECT_SOURCE_DIR}/App/Tests/TestRainbow.cpp
     ${PROJECT_SOURCE_DIR}/App/Tests/TestTexture.cpp)
-file (GLOB VENDOR_SRC_FILES 
-    ${PROJECT_SOURCE_DIR}/vendor/imgui/*.cpp
-    ${PROJECT_SOURCE_DIR}/vendor/RainbowColour/*.cpp
-    ${PROJECT_SOURCE_DIR}/vendor/stb_image/*.cpp)
 
 # options
 set (BUILD_OPENGL_LIB ON CACHE BOOL "" FORCE)
@@ -47,7 +44,7 @@ configure_file (
 )
 include_directories (build/${PROJECT_BINARY_DIR})
 
-# add vendor libraries
+# include vendor libraries
 include_directories (${PROJECT_SOURCE_DIR}/vendor)
 # glew
 if (BUILD_OPENGL_LIB)
@@ -80,19 +77,28 @@ endif ()
 # glm
 add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/glm)
 set (EXTRA_LIBS ${EXTRA_LIBS} glm_static)
+# imgui
+add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/imgui)
+set (EXTRA_LIBS ${EXTRA_LIBS} imgui)
+# stb_image
+add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/stb_image)
+set (EXTRA_LIBS ${EXTRA_LIBS} stb_image)
+# rainbow colour
+add_subdirectory (${PROJECT_SOURCE_DIR}/vendor/RainbowColour)
+set (EXTRA_LIBS ${EXTRA_LIBS} RainbowColour)
 
 # include app
 include_directories (${PROJECT_SOURCE_DIR}/App)
 include_directories (${PROJECT_SOURCE_DIR}/App/Tests)
-add_library (App ${APP_SRC_FILES} ${VENDOR_SRC_FILES})
+add_library (App ${APP_SRC_FILES})
 target_link_libraries (App ${EXTRA_LIBS})
-target_compile_definitions (App PRIVATE ${GLEW_DFLAGS})
+target_compile_definitions (App PRIVATE)
 
 # create executable
 add_executable (main ${PROJECT_SOURCE_DIR}/main.cpp)
 set_target_properties (main PROPERTIES EXECUTABLE_OUTPUT_PATH ".")
 target_link_libraries (main App)
-target_compile_options (main PRIVATE -std=c++17 -Wpsabi -O3)
+target_compile_options (main PRIVATE -std=c++17 -O3)
 
 install (TARGETS main DESTINATION bin)
 install (FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h" DESTINATION include)
