@@ -19,8 +19,10 @@ set (APP_SRC_FILES
     ${PROJECT_SOURCE_DIR}/App/VertexArray.cpp
     ${PROJECT_SOURCE_DIR}/App/VertexBuffer.cpp
     ${PROJECT_SOURCE_DIR}/App/VertexBufferLayout.cpp
+    ${PROJECT_SOURCE_DIR}/App/Tests/MVPControl.cpp
     ${PROJECT_SOURCE_DIR}/App/Tests/TestClearColour.cpp
     ${PROJECT_SOURCE_DIR}/App/Tests/TestCube.cpp
+    ${PROJECT_SOURCE_DIR}/App/Tests/TestCubeTexture.cpp
     ${PROJECT_SOURCE_DIR}/App/Tests/TestDoge.cpp
     ${PROJECT_SOURCE_DIR}/App/Tests/TestMenu.cpp
     ${PROJECT_SOURCE_DIR}/App/Tests/TestRainbow.cpp
